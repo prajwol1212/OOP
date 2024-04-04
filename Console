@@ -1,0 +1,47 @@
+package Project;
+
+import java.util.Scanner;
+
+public class Console {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Admin admin = new Admin();
+
+        while (true) {
+            System.out.println("\nChoose an option:");
+            System.out.println("1. Admin");
+            System.out.println("2. User");
+            System.out.println("3. Exit");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter username:");
+                    String username = scanner.nextLine();
+                    System.out.println("Enter password:");
+                    String password = scanner.nextLine();
+                    if (username.equals("government") && password.equals("123")) {
+                        boolean adminExited = admin.runAdminFunctions(); // Run Admin Functions 
+                        if (adminExited) {
+                            break; // Exit admin interface and continue to the main menu
+                        }
+                    } else {
+                        System.out.println("Invalid username or password. Access denied.");
+                    }
+                    break;
+                case 2:
+                    User user = new User(admin.getStrategies()); // Run user functions 
+                    user.displayStrategies();
+                    break;
+                case 3:
+                    System.out.println("Exiting Console."); // Exit to console 
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
+}
